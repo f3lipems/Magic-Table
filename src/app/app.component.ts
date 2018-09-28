@@ -1148,7 +1148,7 @@ export class AppComponent {
             let linha_str = JSON.stringify(this.tabela[l]);
             let linha = linha_str.split(",");
 
-            this.grade_header.set("linha", "linha"))
+            this.grade_header.set("linha", "linha");
 
             for (let c in linha) {
                 let celula = linha[c].split(":");
@@ -1172,7 +1172,6 @@ export class AppComponent {
             json_parse = JSON.parse(`{"name":"${this.grade_top[c]}"}`);
             this.grid_header.push(json_parse);
         }
-        console.log(this.grid_header);
 
         // Montando Corpo da Grade
         for (let i in this.tabela) {
@@ -1197,6 +1196,7 @@ export class AppComponent {
                     linha_str_json = linha_str_json + ","
                 };
                
+                //Usar operador ternário
                 linha_str_json = linha_str_json + `"${this.grade_top[c]}":"${linha_map_ini.get(this.grade_top[c])}"`
             }
 

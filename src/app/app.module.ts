@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { CommonModule } from '@angular/common';
 import { NgxDatatableModule  } from '@swimlane/ngx-datatable'
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   declarations: [
@@ -12,8 +15,12 @@ import { NgxDatatableModule  } from '@swimlane/ngx-datatable'
   imports: [
     BrowserModule,
     CommonModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot()
   ],
+  exports:[BsDropdownModule, TooltipModule, ModalModule],
   providers: [],
   bootstrap: [AppComponent]
 })
