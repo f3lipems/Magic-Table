@@ -15,11 +15,21 @@
 </table> -->
 
 <div>
+    <h4>Configurações da Tabela</h4>
+    <div class="">
+        <form action="">
+            <input type="radio" name="selecao" value="single"> Single<br>
+            <input type="radio" name="selecao" value="multiClick"> MultiClick<br>
+          </form>
+    </div>
+</div>
+
+<div>
     <ngx-datatable class="material striped selection-cell"
         [rows]="grid_body"
 
         [headerHeight]="50"
-        [limit]="7"
+        [limit]="5"
         [columnMode]="''"
         [headerHeight]="50"
         [footerHeight]="50"
@@ -27,11 +37,11 @@
         [scrollbarV]="false"
         [scrollbarH]="true"
         [selected]="selected"
-        [selectionType]="'single'"
+        [selectionType]="{{line_select}}"
         (select)="onSelect($event)"
         (activate)="onActivate($event)">
 
-        <ngx-datatable-column name="{{celula}}"  [width]="200" *ngFor="let celula of grade_top" headerClass="empresa" [cellClass]="getCellClass"></ngx-datatable-column>
+        <ngx-datatable-column name="{{celula}}" [width]="200" *ngFor="let celula of grade_top" headerClass="empresa" [cellClass]="getCellClass"></ngx-datatable-column>
 
     </ngx-datatable>
 
@@ -42,17 +52,6 @@
                 {{sel.nome}}
             </li>
             <li *ngIf="!selected.length">Nenhuma seleção</li>
-        </ul>
-    </div>
-
-
-    <div class='selected-column'>
-        <h4>Lista de Seleçôes</h4>
-        <ul>
-            <li *ngFor='let sel of selected_list'>
-                {{sel.nome}}
-            </li>
-            <li *ngIf="!selected_list.length">Nenhuma seleção</li>
         </ul>
     </div>
 

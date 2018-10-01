@@ -9,16 +9,23 @@ import { element } from 'protractor';
 })
 export class AppComponent {
 
-    rows = [
-        { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-        { name: 'Dany', gender: 'Male', company: 'KFC' },
-        { name: 'Molly', gender: 'Female', company: 'Burger King' },
-    ];
-    columns = [
-        { prop: 'name' },
-        { name: 'Gender' },
-        { name: 'Company' }
-    ];
+    // rows = [
+    //     { name: 'Austin', gender: 'Male', company: 'Swimlane' },
+    //     { name: 'Dany', gender: 'Male', company: 'KFC' },
+    //     { name: 'Molly', gender: 'Female', company: 'Burger King' },
+    // ];
+    // columns = [
+    //     { prop: 'name' },
+    //     { name: 'Gender' },
+    //     { name: 'Company' }
+    // ];
+
+    //Atributos de configuração
+
+    line_select:string = "'multiClick'";
+
+
+    //Variáveis de formação do Grid
 
     grid_header = [];
     grid_body =  [];
@@ -1235,26 +1242,6 @@ export class AppComponent {
 
     onSelect(event) {
         console.log('Event: select', event, this.selected);
-        this.selected_list.push(this.selected[0])
-
-        let inserir:boolean = true;
-        let linha;
-
-        for(let i in this.selected_list){
-            if (this.selected_list[i][0].value === this.selected[0].value){
-                inserir = false;
-                linha = i;
-            }
-        }
-
-        if (inserir) {
-            this.selected_list.push(this.selected)
-        }else{
-            //this.selected_list.pop
-        }
-
-        alert(JSON.stringify(this.selected))
-        alert(JSON.stringify(this.selected_list))
     }
     
     onActivate(event) {
