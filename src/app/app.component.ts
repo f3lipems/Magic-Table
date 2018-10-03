@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import {DatatableComponent} from '@swimlane/ngx-datatable';
 import { Observable } from 'rxjs';
 import { element } from 'protractor';
 
@@ -7,7 +8,14 @@ import { element } from 'protractor';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
+
 export class AppComponent {
+
+    @ViewChild(DatatableComponent) table: DatatableComponent;
+
+    constructor(private elementRef: ElementRef) {
+
+    }
 
     // rows = [
     //     { name: 'Austin', gender: 'Male', company: 'Swimlane' },
@@ -22,21 +30,26 @@ export class AppComponent {
 
     //Atributos de configuração
 
-    line_select:string = "'multiClick'";
+    line_select: string = "single";
 
 
-    //Variáveis de formação do Grid
-
+    //Atributos de formação do Grid
     grid_header = [];
-    grid_body =  [];
+    grid_body = [];
 
     grade_header = new Map();
     grade_top = [];
     grade = [];
 
+    // Atributos de ações do  Grid
     selected: any[] = [];
-    selected_list: any[] = [];
+    selected_cell;
+    temp = [];
+    rows = [];
 
+    filter_field = 'nome';
+
+    // JSON de teste
     tabela_str = `{  
     "result":
     [  
@@ -1172,10 +1185,10 @@ export class AppComponent {
         // }));
 
         // Header DataTable
-        
+
         this.grid_header.push(JSON.parse(`{"name":"linha"}`));
-        
-        for(let c in this.grade_top){
+
+        for (let c in this.grade_top) {
             json_parse = JSON.parse(`{"name":"${this.grade_top[c]}"}`);
             this.grid_header.push(json_parse);
         }
@@ -1188,7 +1201,7 @@ export class AppComponent {
             linha_array = [];
 
             // Monta o mapa da linha
-            linha_map_ini.set("linha",parseInt(i)+1);
+            linha_map_ini.set("linha", parseInt(i) + 1);
             for (let c in linha) {
                 let celula = linha[c].split(":");
                 linha_map_ini.set(celula[0].replace(/[^a-z0-9]/gi, ""), celula[1].replace(/[^a-z0-9]/gi, ""));
@@ -1199,10 +1212,10 @@ export class AppComponent {
             for (let c in this.grade_top) {
                 linha_map.set(this.grade_top[c], linha_map_ini.get(this.grade_top[c]))
 
-                if(c != "0"){
+                if (c != "0") {
                     linha_str_json = linha_str_json + ","
                 };
-               
+
                 //Usar operador ternário
                 linha_str_json = linha_str_json + `"${this.grade_top[c]}":"${linha_map_ini.get(this.grade_top[c])}"`
             }
@@ -1219,33 +1232,68 @@ export class AppComponent {
 
             linha_map_ini.clear();
             linha_map.clear();
-                 
+
             //String DataGrid
-            linha_array_grid.push(linha.toString().replace("[","").replace("]",""));
+            linha_array_grid.push(linha.toString().replace("[", "").replace("]", ""));
         }
 
         console.log(this.grid_header);
         console.log(this.grid_body);
 
+        this.rows = this.grid_body;
+
         //console.log(this.grade);
     }
 
-    getCellClass({ row, column, value }): any {
-        return {
-          'is-female': value == '5'
-        };
-      }
+    // getCellClass({ row, column, value }): any {
+    //     return {
+    //       'is-female': value == '5'
+    //     };
+    //   }
 
-    getKeys(map) {
-        return Array.from(map.keys());
+    // getKeys(map) {
+    //     return Array.from(map.keys());
+    // }
+
+
+    setSelect(value) {
+        this.line_select = value;
     }
 
     onSelect(event) {
-        console.log('Event: select', event, this.selected);
+        //console.log('Event: select', event, this.selected);
+        // debugger;
+        //this.selected_cell = (<HTMLInputElement>event.target);
+        //console.log((<HTMLInputElement>event.target));
     }
-    
+
     onActivate(event) {
-        console.log('Event: activate', event);
+        //console.log('Event: activate', event);
+
+        if ((<HTMLInputElement>event).value != undefined) {
+            this.selected_cell = (<HTMLInputElement>event).value;
+        }
+    }
+
+    updateFilter(event) {
+
+        var valor = this.filter_field
+        const val = (<HTMLInputElement>event);
+        console.log(val);
+        // filter our data
+        const temp = this.rows.filter(function (d) {
+            return d[valor].toLowerCase().indexOf(val) !== -1 || !val;
+        });
+
+        // update the rows
+        this.grid_body = temp;
+        console.log(this.rows);
+
+        if(temp.length == 0){
+            this.grid_body = this.rows;
+        }
+        // Whenever the filter changes, always go back to the first page
+        this.table.offset = 0;
     }
 
     ngOnInit() {

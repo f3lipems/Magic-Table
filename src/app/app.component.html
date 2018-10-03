@@ -14,30 +14,40 @@
     </tr>
 </table> -->
 
+
 <div>
     <h4>Configurações da Tabela</h4>
     <div class="">
         <form action="">
-            <input type="radio" name="selecao" value="single"> Single<br>
-            <input type="radio" name="selecao" value="multiClick"> MultiClick<br>
+            <input type="radio" name="selecao" value="single" (click)="setSelect('single')" checked> Single<br>
+            <input type="radio" name="selecao" value="multiClick" (click)="setSelect('multiClick')"> MultiClick<br>
+            <input type="radio" name="selecao" value="cell" (click)="setSelect('cell')"> Cell<br>
           </form>
     </div>
 </div>
 
+<input
+    type='text'
+    style='padding:8px;margin:15px auto;width:30%;'
+    placeholder='Buscar...'
+    #valor
+    (input)='updateFilter(valor.value)'
+/>
+
 <div>
-    <ngx-datatable class="material striped selection-cell"
+    <ngx-datatable #table class="material striped selection-cell expandable"        
         [rows]="grid_body"
 
         [headerHeight]="50"
         [limit]="5"
-        [columnMode]="''"
+        [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
         [rowHeight]="50"
         [scrollbarV]="false"
         [scrollbarH]="true"
         [selected]="selected"
-        [selectionType]="{{line_select}}"
+        [selectionType]="line_select"
         (select)="onSelect($event)"
         (activate)="onActivate($event)">
 
@@ -45,14 +55,25 @@
 
     </ngx-datatable>
 
-    <div class='selected-column'>
-        <h4>Seleção</h4>
-        <ul>
-            <li *ngFor='let sel of selected'>
-                {{sel.nome}}
-            </li>
-            <li *ngIf="!selected.length">Nenhuma seleção</li>
-        </ul>
+    <div class="row">
+        <div class='selected-column col-sm-4'>
+            <h4>Seleção</h4>
+            <ul>
+                <li *ngFor='let sel of selected'>
+                    {{sel.nome}}
+                </li>
+                <li *ngIf="!selected.length">Nenhuma seleção</li>
+            </ul>
+        </div>
+
+        <div class='selected-column col-sm-4'>
+            <h4>Célula</h4>
+            <h4>{{selected_cell}}</h4>
+        </div>
+
     </div>
+    
 
 </div>
+
+
