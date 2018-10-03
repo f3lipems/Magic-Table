@@ -5,16 +5,6 @@
     </h1>
 </div>
 
-<!-- <table>
-    <tr>
-        <th *ngFor="let celula of grade_top">{{celula}}</th>
-    </tr>
-    <tr *ngFor="let linha of grade">
-        <td *ngFor="let celula of linha">{{celula}}</td>
-    </tr>
-</table> -->
-
-
 <div>
     <h4>Configurações da Tabela</h4>
     <div class="">
@@ -22,36 +12,48 @@
             <input type="radio" name="selecao" value="single" (click)="setSelect('single')" checked> Single<br>
             <input type="radio" name="selecao" value="multiClick" (click)="setSelect('multiClick')"> MultiClick<br>
             <input type="radio" name="selecao" value="cell" (click)="setSelect('cell')"> Cell<br>
-          </form>
+        </form>
     </div>
 </div>
 
-<input
-    type='text'
-    style='padding:8px;margin:15px auto;width:30%;'
-    placeholder='Buscar...'
-    #valor
-    (input)='updateFilter(valor.value)'
-/>
+<br>
+
+<div class="row">
+    <div class="col-lg-6">
+        <div class="input-group">
+            <!-- <input type="text" class="form-control" aria-label="..." > -->
+            <input type='text' class="form-control" placeholder='Buscar...' 
+                #valor (input)='updateFilter(valor.value)' />
+            <div class="input-group-btn">
+                <select class="form-control" [(ngModel)]="filter_field">
+                    <option *ngFor="let celula of grade_top">{{celula}}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
 
 <div>
-    <ngx-datatable #table class="material striped selection-cell expandable"        
-        [rows]="grid_body"
+    <ngx-datatable #table class="material striped selection-cell expandable" 
+        [rows]="grid_body" 
 
         [headerHeight]="50"
-        [limit]="5"
-        [columnMode]="'force'"
-        [headerHeight]="50"
-        [footerHeight]="50"
-        [rowHeight]="50"
+        [limit]="5" 
+        [columnMode]="'force'" 
+        [headerHeight]="50" 
+        [footerHeight]="50" 
+        [rowHeight]="50" 
         [scrollbarV]="false"
-        [scrollbarH]="true"
-        [selected]="selected"
-        [selectionType]="line_select"
-        (select)="onSelect($event)"
+        [scrollbarH]="true" 
+        [selected]="selected" 
+        [selectionType]="line_select" 
+        (select)="onSelect($event)" 
         (activate)="onActivate($event)">
 
-        <ngx-datatable-column name="{{celula}}" [width]="200" *ngFor="let celula of grade_top" headerClass="empresa" [cellClass]="getCellClass"></ngx-datatable-column>
+        <ngx-datatable-column name="{{celula}}" [width]="200" *ngFor="let celula of grade_top" headerClass="empresa"
+            [cellClass]="getCellClass"></ngx-datatable-column>
 
     </ngx-datatable>
 
@@ -72,8 +74,6 @@
         </div>
 
     </div>
-    
+
 
 </div>
-
-

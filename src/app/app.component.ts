@@ -1276,9 +1276,10 @@ export class AppComponent {
     }
 
     updateFilter(event) {
+        var valor = this.filter_field;
 
-        var valor = this.filter_field
         const val = (<HTMLInputElement>event);
+
         console.log(val);
         // filter our data
         const temp = this.rows.filter(function (d) {
@@ -1288,8 +1289,9 @@ export class AppComponent {
         // update the rows
         this.grid_body = temp;
         console.log(this.rows);
+        console.log(val);
 
-        if(temp.length == 0){
+        if(temp.length == 0 && val == undefined){
             this.grid_body = this.rows;
         }
         // Whenever the filter changes, always go back to the first page

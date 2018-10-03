@@ -7,6 +7,8 @@ import { NgxDatatableModule  } from '@swimlane/ngx-datatable'
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { FormsModule } from '@angular/forms';
+
 
 @NgModule({
   declarations: [
@@ -18,7 +20,8 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     NgxDatatableModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    FormsModule
   ],
   exports:[BsDropdownModule, TooltipModule, ModalModule],
   providers: [],
